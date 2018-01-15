@@ -1,0 +1,229 @@
+\documentclass[12pt]{article}
+%%bzrcommit
+\usepackage{amsmath,amsfonts,graphicx,cancel,boxedminipage,calc,etoolbox,nicefrac}
+
+\usepackage{pifont}% http://ctan.org/pkg/pifont
+\newcommand{\cmark}{\textrm{\ding{51}}}%
+\newcommand{\xmark}{\textrm{\ding{55}}}%
+
+\usepackage[normalem]{ulem}
+
+\makeatletter
+\def\UL@putbox{\ifx\UL@start\@empty \else % not inner
+  \vrule\@width\z@ \LA@penalty\@M
+  {\UL@skip\wd\UL@box \UL@leaders \kern-\UL@skip}%
+    \phantom{\box\UL@box}%
+  \fi}
+\makeatother
+
+% for vertical centering
+%\usepackage{array}
+%\newcolumntype{M}{>{\centering\arraybackslash} m{.55\linewidth} }
+%align table vertically to top
+
+\usepackage[usenames,dvipsnames]{color}
+\usepackage{tikz}
+\tikzstyle{dashdotted}=              [dash pattern=on 3pt off 2pt on \the\pgflinewidth off 2pt]
+
+\usetikzlibrary{arrows}
+\usetikzlibrary{calc}
+
+\setlength{\parskip}{1.2ex}    % space between paragraphs
+\setlength{\parindent}{2em}    % amount of indention
+\setlength{\textwidth}{175mm}      % default = 6.5"
+\setlength{\oddsidemargin}{-5mm}   % default = 0"
+\setlength{\textheight}{225mm}     % default = 9"
+\setlength{\topmargin}{-7mm}      % default = 0"
+
+  
+\title{Introduction to Differential Equations}  
+\author{Lake Bookman, Jack Bookman}    
+\date{Monday, February 16, 2015}   
+
+\providebool{showanswers}
+\global\setbool{showanswers}{true}
+%\global\setbool{showanswers}{false}
+
+\makeatletter\def\thetitle{\@title}\makeatother
+\makeatletter\def\theauthor{\@author}\makeatother
+\makeatletter\def\thedate{\@date}\makeatother
+
+\providecommand{\makealttitle}
+{
+$$\;$$
+\vspace{-4cm}
+\textbf{
+\begin{center}
+\begin{LARGE}
+\thetitle
+\end{LARGE}
+\\\vspace{4mm}
+\begin{large}
+\thedate
+\end{large}
+\end{center}
+}
+\hrule
+\vspace{-.5cm}
+$$\:$$
+}
+
+\providecommand{\makeblankold}[1]{\underline{\phantom{#1}}}
+\providecommand{\makeblank}[1]{\uline{ \LARGE #1}}
+\providecommand{\redtext}[1]{{\color{BrickRed}   #1}}
+
+
+\providecommand{\switchtext}[2]{%
+\ifbool{showanswers}
+	{%
+		#1
+	}%
+	{%
+		#2
+	}%
+}%
+
+\providecommand{\privatetext}[1]{%
+\ifbool{showanswers}
+	{%
+		\redtext{#1}
+	}%
+	{%
+		\uline{ \LARGE #1}
+	}%
+}%
+
+\providecommand{\privatetextnoblank}[1]{%
+\ifbool{showanswers}
+	{%
+		\redtext{#1}
+	}%
+	{%
+		 {\color{white} \uline{ \LARGE #1} }
+	}%
+}%
+
+\providecommand{\privatetextnospace}[1]{%
+\ifbool{showanswers}
+	{%
+		\redtext{#1}
+	}%
+	{%
+	}%
+}%
+
+\providecommand{\alertbox}[2]
+{
+  \begin{center}
+ \begin{boxedminipage}{.9\textwidth}
+  \begin{tabular}{lcl}
+\rule{1.5ex}{1.5ex} &
+ \begin{minipage}{.883\textwidth}
+ \vspace{1mm}
+  \begin{center}\begin{large} \textbf{#1} \end{large}\\
+#2
+\end{center}
+ \end{minipage}&\rule{1.5ex}{1.5ex}\end{tabular}
+ \end{boxedminipage}
+ \end{center}
+}
+\newlength{\mylen}
+
+\providecommand{\ds}{\displaystyle}
+
+\usetikzlibrary{positioning,arrows}
+
+\begin{document} 
+ 
+\makealttitle 
+\setlength{\mylen}{0in}  
+\vspace{-1.5cm}
+$$\:$$
+\privatetextnospace{
+\begin{boxedminipage}{\textwidth}
+\begin{center}
+\bf \underline{ Learning Outcomes }
+\end{center}
+At the end of this lecture I would like students to be able to:
+\begin{itemize}
+\item Verify solutions to differential equations
+\item Offer qualitative insight into differential equations\\ (particularly in relation to practical modeling )
+\item  Sketch solutions on a  slopefield
+\end{itemize}
+\end{boxedminipage}
+}
+\vspace{0cm}
+\begin{enumerate}
+\item
+\begin{enumerate} 
+\item  Is the point $x=1$, $y = 3$ (i.e. the point $(1,3)$ ) a solution to the equation $2 y + x = y + 4$?  Why?\vfill \privatetextnoblank{
+Let's substitute $2 y + x  = 2(3) + 1 = 6 + 1 = 7$ and $y +4 = 3+4 =7$. Since $7=7$ is a true statement, it looks like this pair $(x,y)$ is a solution to the equation. 
+}
+\item  Is the point $(2,3)$ a solution to the equation $y^2 + x = y + 8$?  Why? \vfill
+\privatetextnoblank{
+Let's substitute $y^2 + x  = 3^2 + 2 = 9 + 2 = 11$ and $y +8 = 3+8 =11$.  Since $11=11$ is a true statement, it looks like this pair $(x,y)$ is a solution to the equation. 
+}
+\item  Is the point $(1,1)$ a solution to the equation $x^2 + y^2 = 1$?  Why?\vfill
+\privatetextnoblank{
+Let's substitute $x^2 + y^2  = 1^2 + 1^2= 2$ . $2 \not =1$. Since this equality doesn't hold, (i.e. the sentence $x^2 + y^2 = 1$ is false), this point is not a solution. If we get to discuss this at all, I can point out that $(0,1)$ and $(1,0)$ are solutions. Maybe I can ask if they know what what shape this represents and introduce the idea that the circle is the plot of infinitely many solutions.
+}
+\item What does it mean that a point $(a,b)$ is a solution to an equation? \vfill \privatetextnoblank{
+$(a,b)$ is a solution to an equation if when you substitute into both sides of the equation you get a true statement. 
+}
+\end{enumerate}
+\item 
+\begin{enumerate}
+\item Is the function $y = x^2$ a solution to the equation $\frac{d y}{d x} = 2 x$ ? What about $y = x^2 + 5$? Why? \vfill\privatetextnoblank{ $\frac{d}{dx} \left( x^2 \right) = 2x$ by the power rule, so yes the sentence, $\frac{d y}{dx} = 2x$ is true when $y = x^2$ so yes. Similarly for $y = x^2 + 5$. 
+}
+
+\item Is the function $y = -\frac{1}{x}$ a solution to the equation $\frac{ dy }{d x} =  y^2$?\\[2mm]
+$\phantom{l}$ \hspace{1cm}  If $y = -\frac{1}{x}$, then $\frac{d y}{d x} =$  \privatetext{ $\frac{d}{dx} \left( - \frac{1}{x} \right)  = \frac{1}{x^2}$}\\
+$\phantom{l}$ \hspace{1cm}  If $y = -\frac{1}{x}$, then $y^2 =$  \privatetext{ $ \left( - \frac{1}{x} \right)^2  = \frac{1}{x^2}$}\\
+$\phantom{l}$ \hspace{1cm}  If $y = -\frac{1}{x}$,  is $ \frac{d y}{d x} = y^2 $ ?  \privatetextnoblank{Yes, this checks out!} 
+\item Is the function $y = \frac{x^2}{2}$ a solution to the equation $\frac{ dy }{d x} =  y + x$?\\[2mm]
+$\phantom{l}$ \hspace{1cm}  If $y = \frac{x^2}{2}$, then \hspace{2.8mm}$\frac{d y}{d x}\hspace{2.8mm} =\hspace{2.8mm}$  \privatetext{ $\frac{d}{dx} \left(\frac{x^2}{2}\right)  = x $}\\
+$\phantom{l}$ \hspace{1cm}  If $y = \frac{x^2}{2}$, then $y + x =$  \privatetext{ $y + x = \frac{x^2}{2}  + x$}\\
+$\phantom{l}$ \hspace{1cm}  If $y = \frac{x^2}{2}$,  is $ \frac{d y}{d x} = y + x $ ?\vfill  \privatetext{These guys are obviously not equal. In point of fact , this is an integrating factor problem and the solutions are of the form $ y = (-1 -x) + A e^x$}
+\end{enumerate}
+\newpage 
+\item
+\begin{enumerate}
+\item Is the function $y = e^{3 x} $ a solution to the equation $\frac{ dy }{d x} = 3 y  $?\\[2mm]
+$\phantom{l}$ \hspace{1cm}  If $y =  e^{3 x}$, then \hspace{0.0mm}$\frac{d y}{d x}\hspace{0.0mm} =\hspace{0.0mm}$  \privatetext{ $\frac{d}{dx} \left( e^{3x} \right)  =3 e^{3 x} $}\\[1mm]
+$\phantom{l}$ \hspace{1cm}  If $y =  e^{3 x}$, then $3 y =$  \privatetext{ $3 y =3 e^{3 x}  \cmark$}\\
+
+\item Is the function $y = e^{3 x} $ a solution to the equation $\frac{ dy }{d x} = 3 y  $?\\[2mm]
+$\phantom{l}$ \hspace{1cm}  If $y =  e^{3 x}+1$, then \hspace{0.0mm}$\frac{d y}{d x}\hspace{0.0mm} =\hspace{0.0mm}$  \privatetext{ $\frac{d}{dx} \left( e^{3x} + 1  \right)  =3 e^{3 x}$}\\[1mm]
+$\phantom{l}$ \hspace{1cm}  If $y =  e^{3 x}+1$, then $3 y =$  \privatetext{$3 y =3  \left( e^{3 x}   + 1 \right) = 3 e^{3 x} +3 $ \xmark}\\[1mm]
+
+\item Is the function $y = e^{3 x} $ a solution to the equation $\frac{ dy }{d x} = 3 y  $?\\[2mm]
+$\phantom{l}$ \hspace{1cm}  If $y =  2e^{3 x}$, then \hspace{0.0mm}$\frac{d y}{d x}\hspace{0.0mm} =\hspace{0.0mm}$  \privatetext{ $\frac{d}{dx} \left( 2 e^{3x} \right)  =6 e^{3 x} $}\\[1mm]
+$\phantom{l}$ \hspace{1cm}  If $y =  2e^{3 x}$, then $3 y =$  \privatetext{ $3 y =3  \left(2 e^{3 x} \right) = 6 e^{3x}  \cmark$}\\[1mm]
+\end{enumerate}
+
+\privatetextnoblank{
+Now I'm going to lecture for a bit.  A short bit. Here's roughly what I aim to say:\\ \\
+The equations $\frac{d y} {d x} = y^2$ and $\frac{d y }{d x} = y + x$ that we just discussed are examples of differential equations: equations that relate a (possibly unknown) function to derivatives of itself and possibly the independent variable. 
+Here's what I'll write on the board:
+\begin{quote}
+``Any equation of the from $\frac{d y}{d t}  = g(t, y)$  is a (first order ordinary) \underline{differential equation}. \\
+We say $y = f(t)$ is  \underline{solution} to a differential equation, if when you substitute $f(t)$ for $y$ into the left and right hand sides of the equation, you get a true statement."
+\end{quote}
+
+Ok, great. Well, why would anyone care? It turns out that often we can reason out properties of the rate of change of a quantity of interest without being able say directly anything about the quantity itself. That might sound a bit weird, but think about gravity. Physicists tell us that everything on earth accelerates at the same rate--that tells us something about the rate of change of velocity. If it happens that velocity is what we happen to care about--that fits this situation. Let's go one simpler and talk about population. Let's start with the basic idea that the more people there are, the faster the population ought to be growing. That's a little informal, so let's try and take that idea and turn it into useful information. Which brings us to the next question... I've written out in fancy talk the idea that ``the more people there are, the faster the population is growing." I want you to try and write an equation that reflects that idea. }
+
+\newpage
+\begin{center}
+\underline{Population Modeling}
+\end{center}
+\item \begin{enumerate}
+\item Express the following sentence as a differential equation (symbols instead of words): ``the rate of change of population is directly proportional to the size of the population."
+\item Can you guess a function that satisfies the differential equation you wrote down in (a)? 
+\item Can you find another solution? 
+\end{enumerate}
+\privatetextnoblank{ Ok, I'm going to talk for a bit here. 
+}
+\end{enumerate}
+\end{document}  
+  
+ 
